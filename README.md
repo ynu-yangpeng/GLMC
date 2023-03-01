@@ -1,7 +1,7 @@
 # [CVPR2023] Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions（GLMC）
 by **Fei Du, peng Yang, Qi Jia, xiaoting chen, Fengtao Nan, Yun Yang**
 
-This is the official implementation of  [Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions]
+This is the official implementation of  [Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions](https://github.com/ynu-yangpeng/GLMC/edit/main/README.md)
 
 ## Overview
 ![image](https://user-images.githubusercontent.com/48430480/222028170-e63da465-e143-4c6d-bdb9-ca1b3e31d469.png)
@@ -22,14 +22,20 @@ All codes are written by Python 3.9 with
 ### Preparing Datasets
 Download the object re-ID datasets Market-1501, MSMT17, and VeRi-776 to PPLR/examples/data. The directory should look like
 ````
-PPLR/examples/data
-├── Market-1501-v15.09.15
-├── MSMT17_V1
-└── VeRi
+GLMC/data
+├── CIFAR-100-python
+├── CIFAR-10-batches-py
+└── data_txt
+    └── ImageNet_LT_val.txt
+    └── ImageNet_LT_train.txt
 ````
-## Training
-## Testing
-## Acknowledgement
+
+## Result and Pretrained models
+### CIFAR-10-LT
+| Method | Model | Top-1 Acc(%) |
+| :---:|:---:|:---:|
+| git status   | git status     | git status    |
+| git diff     | git diff       | git diff      |
 ## Citation
 If you find this code useful for your research, please consider citing our paper<br>
 ````
