@@ -21,6 +21,7 @@ All codes are written by Python 3.9 with
 
 ### Preparing Datasets
 Download the object re-ID datasets Market-1501, MSMT17, and VeRi-776 to PPLR/examples/data. The directory should look like
+
 ````
 GLMC/data
 ├── CIFAR-100-python
@@ -31,11 +32,35 @@ GLMC/data
 ````
 
 ## Result and Pretrained models
+
 ### CIFAR-10-LT
-| Method | Model | Top-1 Acc(%) |
-| :---:|:---:|:---:|
-| git status   | git status     | git status    |
-| git diff     | git diff       | git diff      |
+| Method | IF | Model | Top-1 Acc(%) |
+| :---:| :---:|:---:|:---:|
+| GLMC   | 100   | ResNet-32     | 92.34    |
+| GLMC   | 50    | ResNet-32     | 94.18    |
+| GLMC   | 10    | ResNet-32     | 94.92    |
+| GLMC +  MaxNorm  | 100   | ResNet-32     | 94.18    |
+| GLMC +  MaxNorm  | 50    | ResNet-32     | 95.13    |
+| GLMC +  MaxNorm  | 10    | ResNet-32     | 95.70    |
+
+### CIFAR-100-LT     
+| Method | IF | Model | Top-1 Acc(%) |
+| :---:| :---:|:---:|:---:|    
+| GLMC   | 100   | ResNet-32     | 55.88    |
+| GLMC   | 50    | ResNet-32     | 61.08    |
+| GLMC   | 10    | ResNet-32     | 70.74    |
+| GLMC +  MaxNorm  | 100   | ResNet-32     | 57.11    |
+| GLMC +  MaxNorm  | 50    | ResNet-32     | 62.32    |
+| GLMC +  MaxNorm  | 10    | ResNet-32     | 72.33    |
+
+### ImageNet-LT     
+| Method | Model | Many | Med | Few | All |
+| :---:| :---:|:---:|:---:|:---:| :---:| 
+| GLMC              |ResNeXt-50     | 70.1     | 52.4     | 30.4     | 56.3    |
+| GLMC + MaxNorm    |ResNeXt-50     | 60.8     | 55.9     | 45.5     | 56.7    |
+| GLMC + BS         |ResNeXt-50     | 64.76    | 55.67    | 42.19    | 57.21   |
+
+
 ## Citation
 If you find this code useful for your research, please consider citing our paper<br>
 ````
