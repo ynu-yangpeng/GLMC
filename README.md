@@ -1,18 +1,18 @@
 # [CVPR2023] Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions（GLMC）
-by **Fei Du, peng Yang, Qi Jia, xiaoting chen, Fengtao Nan, Yun Yang**
+by **Fei Du, Peng Yang, Qi Jia, Xiaoting chen, Fengtao Nan, Yun Yang**
 
 This is the official implementation of  [Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions](https://github.com/ynu-yangpeng/GLMC/edit/main/README.md)
 
 ## Overview
 ![image](https://user-images.githubusercontent.com/48430480/222313046-fe5a8a54-cf78-4726-aea2-e866de8338ea.png)
 
-> An overview of our GLMC: two types of mixed-label augmented images are processed by an encoder network and a projection head to obtain the representation h_g and h_l. Then a prediction head transforms the two representations to output u_g and u_l. We minimize their negative cosine similarity as an auxiliary lossin the supervised loss. sg(*) denotes stop gradient operation.
+> An overview of our GLMC: two types of mixed-label augmented images are processed by an encoder network and a projection head to obtain the representation h~g and h_l. Then a prediction head transforms the two representations to output u_g and u_l. We minimize their negative cosine similarity as an auxiliary lossin the supervised loss. sg(*) denotes stop gradient operation.
 
 > 
 ![image](https://user-images.githubusercontent.com/48430480/222028170-e63da465-e143-4c6d-bdb9-ca1b3e31d469.png)
 
 
-> We propose an efficient one-stage training strategy for long-tailed visual recognition called Global and Local Mixture Consistency cumulative learning (GLMC). Our core ideas are twofold: (1) a global and local mixture consistency loss improves the robustness of the feature extractor. Specifically, we generate two augmented batches by the global MixUp and local CutMix from the same batch data, respectively, and then use cosine similarity to minimize the difference. (2)A cumulative head-tail soft label reweighted loss mitigates the head class bias problem. We use empirical class frequencies to reweight the mixed label of the head-tail class for long-tailed data and then balance the conventional loss and the rebalanced loss with a coefficient accumulated by epochs.
+> We propose an efficient one-stage training strategy for long-tailed visual recognition called Global and Local Mixture Consistency cumulative learning (GLMC). Our core ideas are twofold: (1) a global and local mixture consistency loss improves the robustness of the feature extractor. Specifically, we generate two augmented batches by the global MixUp and local CutMix from the same batch data, respectively, and then use cosine similarity to minimize the difference. (2) A cumulative head-tail soft label reweighted loss mitigates the head class bias problem. We use empirical class frequencies to reweight the mixed label of the head-tail class for long-tailed data and then balance the conventional loss and the rebalanced loss with a coefficient accumulated by epochs.
 
 ## Getting Started
 ### Requirements
