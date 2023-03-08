@@ -71,7 +71,7 @@ If you find this code useful for your research, please consider citing our paper
 ````
 @inproceedings {du2023GLMC,
     title={Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions},
-    author={Fei Du, peng Yang, Qi Jia, xiaoting chen, Fengtao Nan, Yun Yang},
+    author={Fei Du, Peng Yang, Qi Jia, Xiaoting chen, Fengtao Nan, Yun Yang},
     booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
     year={2023}
   }
