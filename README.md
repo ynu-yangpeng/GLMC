@@ -6,7 +6,7 @@ This is the official implementation of  [Global and Local Mixture Consistency Cu
 ## Overview
 ![image](https://user-images.githubusercontent.com/48430480/222313046-fe5a8a54-cf78-4726-aea2-e866de8338ea.png)
 
-> An overview of our GLMC: two types of mixed-label augmented images are processed by an encoder network and a projection head to obtain the representation h~g and h_l. Then a prediction head transforms the two representations to output u_g and u_l. We minimize their negative cosine similarity as an auxiliary lossin the supervised loss. sg(*) denotes stop gradient operation.
+> An overview of our GLMC: two types of mixed-label augmented images are processed by an encoder network and a projection head to obtain the representation $h_g$ and $h_l$. Then a prediction head transforms the two representations to output $u_g$ and $u_l$. We minimize their negative cosine similarity as an auxiliary lossin the supervised loss. $sg(*)$ denotes stop gradient operation.
 
 > 
 ![image](https://user-images.githubusercontent.com/48430480/222028170-e63da465-e143-4c6d-bdb9-ca1b3e31d469.png)
@@ -31,6 +31,9 @@ Download the object re-ID datasets Market-1501, MSMT17, and VeRi-776 to PPLR/exa
 GLMC/data
 ├── CIFAR-100-python
 ├── CIFAR-10-batches-py
+├── ImageNet
+    └── train
+    └── val
 └── data_txt
     └── ImageNet_LT_val.txt
     └── ImageNet_LT_train.txt
