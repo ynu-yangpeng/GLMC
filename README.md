@@ -32,8 +32,8 @@ GLMC/data
 ├── CIFAR-100-python
 ├── CIFAR-10-batches-py
 ├── ImageNet
-    └── train
-    └── val
+|   └── train
+|   └── val
 └── data_txt
     └── ImageNet_LT_val.txt
     └── ImageNet_LT_train.txt
