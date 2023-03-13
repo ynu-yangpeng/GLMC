@@ -27,7 +27,7 @@ All codes are written by Python 3.9 with
 - numpy = 1.22.0
 
 ### Preparing Datasets
-Download the object re-ID datasets Market-1501, MSMT17, and VeRi-776 to PPLR/examples/data. The directory should look like
+Download the datasets CIFAR-10, CIFAR-100, and ImageNet to GLMC/data. The directory should look like
 
 ````
 GLMC/data
