@@ -3,6 +3,8 @@ by **Fei Du, Peng Yang, Qi Jia, Fengtao Nan, Xiaoting Chen, Yun Yang**
 
 This is the official implementation of  [Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions](https://github.com/ynu-yangpeng/GLMC/edit/main/README.md)
 
+
+
 ## Overview
 
 <div align="center"><img src="https://user-images.githubusercontent.com/48430480/223947913-edbdd463-d6e1-4ae7-8e8d-b846c002a20d.png"></div>
@@ -64,12 +66,12 @@ GLMC/data
 | GLMC +  MaxNorm  | 10    | ResNet-32     | 72.33    |
 
 ### ImageNet-LT     
-| Method | Model | Many | Med | Few | All |
+| Method | Model | Many | Med | Few | All | model |
 | :---:| :---:|:---:|:---:|:---:| :---:| 
-| GLMC              |ResNeXt-50     | 70.1     | 52.4     | 30.4     | 56.3    |
-| GLMC + MaxNorm    |ResNeXt-50     | 60.8     | 55.9     | 45.5     | 56.7    |
-| GLMC + BS         |ResNeXt-50     | 64.76    | 55.67    | 42.19    | 57.21   |
+| GLMC              |ResNeXt-50     | 70.1     | 52.4     | 30.4     | 56.3    | [Download](https://drive.google.com/file/d/1GILBAR5fPcpICtM6uUwmYGkEN11wyEOV/view?usp=share_link) |
+| GLMC + BS         |ResNeXt-50     | 64.76    | 55.67    | 42.19    | 57.21   | [Download](https://drive.google.com/file/d/1GILBAR5fPcpICtM6uUwmYGkEN11wyEOV/view?usp=share_link) |
 
+[Download](https://github.com/ynu-yangpeng/GLMC/edit/main/README.md)
 
 ## Citation
 If you find this code useful for your research, please consider citing our paper<br>
