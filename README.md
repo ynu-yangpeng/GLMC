@@ -67,7 +67,7 @@ GLMC/data
 
 ### ImageNet-LT     
 | Method | Model | Many | Med | Few | All | model |
-| :---:| :---:|:---:|:---:|:---:| :---:| 
+| :---:| :---:|:---:|:---:|:---:| :---:|  :---:| 
 | GLMC |ResNeXt-50 | 70.1  | 52.4  | 30.4     | 56.3    | [Download](https://drive.google.com/file/d/1GILBAR5fPcpICtM6uUwmYGkEN11wyEOV/view?usp=share_link) |
 | GLMC + BS |ResNeXt-50 | 64.76 | 55.67    | 42.19    | 57.21   | [Download](https://drive.google.com/file/d/1GILBAR5fPcpICtM6uUwmYGkEN11wyEOV/view?usp=share_link) |
 
