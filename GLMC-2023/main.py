@@ -3,8 +3,8 @@ import os
 import time
 import argparse
 sys.path.append(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0])
-os.path.dirname #获取当前运行脚本的绝对路径
-os.path.abspath(os.path.dirname(__file__)) #获取当前脚本的父路径的绝对路径
+os.path.dirname
+os.path.abspath(os.path.dirname(__file__))
 sys.path.append(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0])
 import torch
 import torch.nn as nn
