@@ -2,10 +2,9 @@ import shutil
 from torch.utils import data
 import copy
 import os
-from GLMC.imbalance_data.cifar100Imbanlance import *
-from GLMC.imbalance_data.cifar10Imbanlance import *
+from imbalance_data.cifar100Imbanlance import *
+from imbalance_data.cifar10Imbanlance import *
 from imbalance_data.dataset_lt_data import *
-from utils.autoaug import CIFAR10Policy, Cutout
 import utils.moco_loader as moco_loader
 from utils.randaugment import rand_augment_transform
 
@@ -112,12 +111,51 @@ def get_transform(dataset):
         ])
         return transform_train, transform_val
 
-
+    r = random.random()
     if dataset == "ImageNet-LT":
-        r = random.random()
         normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         rgb_mean = (0.485, 0.456, 0.406)
         ra_params = dict(translate_const=int(224 * 0.45),img_mean=tuple([min(255, round(255 * x)) for x in rgb_mean]), )
+
+        augmentation_randncls = [
+            transforms.RandomResizedCrop(224, scale=(0.08, 1.)),
+            transforms.RandomHorizontalFlip(),
+            transforms.RandomApply([
+                transforms.ColorJitter(0.4, 0.4, 0.4, 0.0)
+            ], p=1.0),
+            rand_augment_transform('rand-n{}-m{}-mstd0.5'.format(2, 10), ra_params),
+            transforms.ToTensor(),
+            normalize,
+        ]
+        augmentation_sim = [
+            transforms.RandomResizedCrop(224),
+            transforms.RandomApply([
+                transforms.ColorJitter(0.4, 0.4, 0.4, 0.0)  # not strengthened
+            ], p=1.0),
+            transforms.RandomGrayscale(p=0.2),
+            transforms.RandomApply([moco_loader.GaussianBlur([.1, 2.])], p=0.5),
+            transforms.RandomHorizontalFlip(),
+            transforms.ToTensor(),
+            normalize
+        ]
+        transform_val = transforms.Compose([
+            transforms.Resize(256),
+            transforms.CenterCrop(224),
+            transforms.ToTensor(),
+            normalize])
+
+        if r < 0.5:
+            transform_train = transforms.Compose(augmentation_randncls)
+        else:
+            transform_train = transforms.Compose(augmentation_sim)
+
+        return transform_train, transform_val
+
+    if dataset == "iNaturelist2018":
+        normalize = transforms.Normalize(mean=[0.466, 0.471, 0.380], std=[0.195, 0.194, 0.192])
+        rgb_mean = (0.485, 0.456, 0.406)
+        ra_params = dict(translate_const=int(224 * 0.45),
+                         img_mean=tuple([min(255, round(255 * x)) for x in rgb_mean]), )
 
         augmentation_randncls = [
             transforms.RandomResizedCrop(224, scale=(0.08, 1.)),

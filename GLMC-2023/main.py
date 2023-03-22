@@ -15,32 +15,22 @@ import torch.nn.functional as F
 from utils import util
 from utils.util import *
 from model import ResNet_cifar
-from model import Resnet_ImageNet_LT
+from model import Resnet_LT
 from imbalance_data import cifar10Imbanlance,cifar100Imbanlance,dataset_lt_data
 import logging
 import datetime
 import math
 from sklearn.metrics import confusion_matrix
-from loss import *
 import warnings
 from Trainer import Trainer
+# demo
 
 best_acc1 = 0
 
-class NormedLinear(nn.Module):
-    def __init__(self, in_features, out_features):
-        super(NormedLinear, self).__init__()
-        self.weight = Parameter(torch.Tensor(in_features, out_features))
-        self.weight.data.uniform_(-1, 1).renorm_(2, 1, 1e-5).mul_(1e5)
-
-    def forward(self, x):
-        out = F.normalize(x, dim=1).mm(F.normalize(self.weight, dim=0))
-        return out
-
 def get_model(args):
-    if args.dataset == "ImageNet-LT":
+    if args.dataset == "ImageNet-LT" or args.dataset == "iNaturelist2018":
         print("=> creating model '{}'".format('resnext50_32x4d'))
-        net = Resnet_ImageNet_LT.resnext50_32x4d(num_classes=args.num_classes)
+        net = Resnet_LT.resnext50_32x4d(num_classes=args.num_classes)
         return net
     else:
         print("=> creating model '{}'".format(args.arch))
@@ -71,21 +61,14 @@ def get_dataset(args):
         testset = dataset_lt_data.LT_Dataset(args.root, args.dir_test_txt,transform_val)
         return trainset,testset
 
-def SimSiamLoss(p, z, version='simplified'):  # negative cosine similarity
-    z = z.detach()  # stop gradient
-
-    if version == 'original':
-        p = F.normalize(p, dim=1)  # l2-normalize
-        z = F.normalize(z, dim=1)  # l2-normalize
-        return -(p * z).sum(dim=1).mean()
-
-    elif version == 'simplified':  # same thing, much faster. Scroll down, speed test in __main__
-        return - F.cosine_similarity(p, z, dim=-1).mean()
-    else:
-        raise Exception
+    if args.dataset == 'iNaturelist2018':
+        trainset = dataset_lt_data.LT_Dataset(args.root, args.dir_train_txt,util.TwoCropTransform(transform_train))
+        testset = dataset_lt_data.LT_Dataset(args.root, args.dir_test_txt,transform_val)
+        return trainset,testset
 
 def main():
     args = parser.parse_args()
+    print(args)
     curr_time = datetime.datetime.now()
     args.store_name = '#'.join(["dataset: " + args.dataset, "arch: " + args.arch,"imbanlance_rate: " + str(args.imbanlance_rate)
             ,datetime.datetime.strftime(curr_time, '%Y-%m-%d %H:%M:%S')])
@@ -180,7 +163,7 @@ if __name__ == '__main__':
     # train set
     parser = argparse.ArgumentParser(description="Global and Local Mixture Consistency Cumulative Learning")
     parser.add_argument('--dataset', type=str, default='cifar100', help="cifar10,cifar100,ImageNet-LT")
-    parser.add_argument('--root', type=str, default='/root/NFS_Data/Public_DataSet/', help="dataset setting")
+    parser.add_argument('--root', type=str, default='/data/', help="dataset setting")
     parser.add_argument('-a', '--arch', metavar='ARCH', default='resnet34',choices=('resnet18', 'resnet34', 'resnet50', 'resnext50_32x4d'))
     parser.add_argument('--num_classes', default=100, type=int, help='number of classes ')
     parser.add_argument('--imbanlance_rate', default=0.01, type=float, help='imbalance factor')
@@ -193,15 +176,14 @@ if __name__ == '__main__':
     parser.add_argument('--resample_weighting', default=0.2, type=float,help='weighted for sampling probability (q(1,k))')
     parser.add_argument('--label_weighting', default=1.0, type=float, help='weighted for Loss')
     parser.add_argument('--contrast_weight', default=10,type=int,help='Mixture Consistency  Weights')
-
     # etc.
     parser.add_argument('--seed', default=3407, type=int, help='seed for initializing training. ')
-    parser.add_argument('-p', '--print_freq', default=100, type=int, metavar='N',help='print frequency (default: 100)')
+    parser.add_argument('-p', '--print_freq', default=1000, type=int, metavar='N',help='print frequency (default: 100)')
     parser.add_argument('--gpu', default=None, type=int,help='GPU id to use.')
-    parser.add_argument('-j', '--workers', default=12, type=int, metavar='N',help='number of data loading workers (default: 4)')
+    parser.add_argument('-j', '--workers', default=4, type=int, metavar='N',help='number of data loading workers (default: 4)')
     parser.add_argument('--resume', default=None, type=str, metavar='PATH',help='path to latest checkpoint (default: none)')
     parser.add_argument('--start-epoch', default=0, type=int, metavar='N',help='manual epoch number (useful on restarts)')
-    parser.add_argument('--root_log', type=str, default='/root/PaperProject/GLMC-CVPR2023/output/')
-    parser.add_argument('--root_model', type=str, default='/root/PaperProject/GLMC-CVPR2023/output/')
-    parser.add_argument('--store_name', type=str, default='/root/PaperProject/GLMC-CVPR2023/output/')
+    parser.add_argument('--root_log', type=str, default='GLMC-CVPR2023/output/')
+    parser.add_argument('--root_model', type=str, default='GLMC-CVPR2023/output/')
+    parser.add_argument('--store_name', type=str, default='GLMC-CVPR2023/output/')
     main()

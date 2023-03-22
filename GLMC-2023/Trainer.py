@@ -136,7 +136,7 @@ class Trainer(object):
                               'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
                               'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
                               'Loss {loss.val:.4f} ({loss.avg:.4f})'.format(
-                        epoch, self.epochs, i, len(self.train_loader), batch_time=batch_time,
+                        epoch + 1, self.epochs, i, len(self.train_loader), batch_time=batch_time,
                     data_time=data_time, loss=losses,lr=self.train_scheduler.get_last_lr()[0]))  # TODO
                     print(output)
                     # evaluate on validation set

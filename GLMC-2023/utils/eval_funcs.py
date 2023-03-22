@@ -41,50 +41,6 @@ def print_accuracy(model, dataloaders, new_labelList, device='cup', test_aug=Tru
     acc_avgClass /= confMat.shape[0]
     print('acc avgClass: ', "{:.2%}".format(acc_avgClass))
 
-    # breakdownResults = shot_acc(predList, grndList, np.array(new_labelList), many_shot_thr=100, low_shot_thr=20,
-    #                             acc_per_cls=False)
-    # print('Many:', "{:.2%}".format(breakdownResults[0]), 'Medium:', "{:.2%}".format(breakdownResults[1]), 'Few:',
-    #       "{:.2%}".format(breakdownResults[2]))
-
-
-def print_accuracy_second(model, dataloaders, new_labelList, device='cup', test_aug=True):
-    model.eval()
-
-    if test_aug:
-        model = horizontal_flip_aug(model)
-
-    predList = np.array([])
-    grndList = np.array([])
-    for sample in dataloaders['test']:
-        with torch.no_grad():
-            images, labels = sample
-            images = images.to(device)
-            labels = labels.type(torch.long).view(-1).numpy()
-            logits = model(images)
-            softmaxScores = F.softmax(logits, dim=1)
-
-            predLabels = softmaxScores.argmax(dim=1).detach().squeeze().cpu().numpy()
-            predList = np.concatenate((predList, predLabels))
-            grndList = np.concatenate((grndList, labels))
-
-    confMat = sklearn.metrics.confusion_matrix(grndList, predList)
-
-    # normalize the confusion matrix
-    a = confMat.sum(axis=1).reshape((-1, 1))
-    confMat = confMat / a
-
-    acc_avgClass = 0
-    for i in range(confMat.shape[0]):
-        acc_avgClass += confMat[i, i]
-
-    acc_avgClass /= confMat.shape[0]
-    print('acc avgClass: ', "{:.1%}".format(acc_avgClass))
-
-    breakdownResults = shot_acc(predList, grndList, np.array(new_labelList), many_shot_thr=100, low_shot_thr=20,
-                                acc_per_cls=False)
-    print('Many:', "{:.1%}".format(breakdownResults[0]), 'Medium:', "{:.1%}".format(breakdownResults[1]), 'Few:', "{:.1%}".format(breakdownResults[2]))
-
-
 def horizontal_flip_aug(model):
     def aug_model(data):
         logits = model(data)
@@ -103,7 +59,6 @@ def mic_acc_cal(preds, labels):
     else:
         acc_mic_top1 = (preds == labels).sum().item() / len(labels)
     return acc_mic_top1
-
 
 def shot_acc(preds, labels, train_data, many_shot_thr=100, low_shot_thr=20, acc_per_cls=False):
     # This function is excerpted from a publicly available code [commit 01e52ed, BSD 3-Clause License]
@@ -210,36 +165,6 @@ def createMontage(imList, dims, times2rot90=0):
         else:
             x+=1
     return imMontage
-
-def print_accuracy_our(model, dataloaders, new_labelList, device='cup', test_aug=True):
-    model.eval()
-    if test_aug:
-        model = horizontal_flip_aug(model)
-    predList = np.array([])
-    grndList = np.array([])
-    correct_top1 = []
-    i = 0
-    iterNum = len(dataloaders.dataset) // 128
-    for sample in dataloaders:
-        with torch.no_grad():
-            images, labels = sample
-            images = images.to(device)
-            target_acc = labels
-            labels = labels.type(torch.long).view(-1).numpy()
-            logits = model(images)
-            top1 = accuracy(logits.data, target_acc.cuda().data, topk=(1,))
-            correct_top1.append(top1[0].cpu().numpy())
-            softmaxScores = F.softmax(logits, dim=1)
-            predLabels = softmaxScores.argmax(dim=1).detach().squeeze().cpu().numpy()
-            predList = np.concatenate((predList, predLabels))
-            grndList = np.concatenate((grndList, labels))
-        if i % 100 == 0:
-            print("validationing.... 第 " + str(i) + " / " + str(iterNum))
-        i = i + 1
-    correct_top1 = sum(correct_top1) / len(correct_top1)
-    print("测试top1:",correct_top1)
-    return correct_top1
-
 
 def accuracy(output, target, topk=(1,)):
     maxk = max(topk)
