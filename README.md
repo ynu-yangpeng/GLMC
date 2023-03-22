@@ -38,9 +38,12 @@ GLMC/data
 ├── ImageNet
 |   └── train
 |   └── val
+├── train_val2018
 └── data_txt
     └── ImageNet_LT_val.txt
     └── ImageNet_LT_train.txt
+    └── iNaturalist18_train.txt
+    └── iNaturalist18_val.txt
 ````
 
 ## Result and Pretrained models
