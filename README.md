@@ -29,10 +29,10 @@ All codes are written by Python 3.9 with
 - numpy = 1.22.0
 
 ### Preparing Datasets
-Download the datasets CIFAR-10, CIFAR-100, and ImageNet to GLMC/data. The directory should look like
+Download the datasets CIFAR-10, CIFAR-100, ImageNet, and iNaturalist18 to GLMC-2023/data. The directory should look like
 
 ````
-GLMC/data
+GLMC-2023/data
 ├── CIFAR-100-python
 ├── CIFAR-10-batches-py
 ├── ImageNet
