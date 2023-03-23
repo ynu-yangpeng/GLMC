@@ -78,10 +78,12 @@ GLMC-2023/data
 ## Citation
 If you find this code useful for your research, please consider citing our paper<br>
 ````
-@inproceedings {du2023GLMC,
-    title={Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions},
-    author={Fei Du, Peng Yang, Qi Jia, Fengtao Nan, Xiaoting Chen, Yun Yang},
-    booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-    year={2023}
-  }
+@inproceedings{
+du2023global,
+title={Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions},
+author={Fei Du, Peng Yang, Qi Jia, Fengtao Nan, Xiaoting Chen, Yun Yang},
+booktitle={Conference on Computer Vision and Pattern Recognition 2023},
+year={2023},
+url={https://openreview.net/forum?id=gLkKCqK3WOD}
+}
 ````
