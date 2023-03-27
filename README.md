@@ -52,6 +52,15 @@ python main.py --dataset cifar100 -a resnet34 --num_classes 100 --imbanlance_rat
 --resample_weighting 0.2 --label_weighting 1.0 --contrast_weight 10
 ````
 
+for ImageNet-LT
+````
+python main.py --dataset ImageNet-LT -a resnext50_32x4d --num_classes 1000 --beta 0.5 --lr 0.1 --epochs 135 -b 128 --momentum 0.9 --weight_decay 2e-3 --resample_weighting 0.2 --label_weighting 1.0 --contrast_weight 10
+````
+
+## Testing
+````
+python test.py --dataset ImageNet-LT -a resnext50_32x4d --num_classes 1000 --resume model_path
+````
 
 ## Result and Pretrained models
 
