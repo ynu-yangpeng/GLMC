@@ -48,7 +48,6 @@ class Trainer(object):
     def train(self):
         best_acc1 = 0
         for epoch in range(self.start_epoch, self.epochs):
-            self.paco_adjust_learning_rate(self.optimizer, epoch, self.args)
             alpha = 1 - (epoch / self.epochs) ** 2
             batch_time = AverageMeter('Time', ':6.3f')
             data_time = AverageMeter('Data', ':6.3f')
@@ -132,17 +131,19 @@ class Trainer(object):
                 batch_time.update(time.time() - end)
                 end = time.time()
                 if i % self.print_freq == 0:
-                    output = ('Epoch: [{0}/{1}][{2}/{3}], lr: {lr}\t'
+                    output = ('Epoch: [{0}/{1}][{2}/{3}]\t'
                               'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
                               'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
                               'Loss {loss.val:.4f} ({loss.avg:.4f})'.format(
                         epoch + 1, self.epochs, i, len(self.train_loader), batch_time=batch_time,
-                    data_time=data_time, loss=losses,lr=self.train_scheduler.get_last_lr()[0]))  # TODO
+                    data_time=data_time, loss=losses))  # TODO
                     print(output)
                     # evaluate on validation set
             acc1 = self.validate(epoch=epoch)
-
-            self.train_scheduler.step()
+            if self.args.dataset == 'ImageNet-LT' or self.args.dataset == 'iNaturelist2018':
+                self.paco_adjust_learning_rate(self.optimizer, epoch, self.args)
+            else:
+                self.train_scheduler.step()
             # remember best acc@1 and save checkpoint
             is_best = acc1 > best_acc1
             best_acc1 = max(acc1,  best_acc1)

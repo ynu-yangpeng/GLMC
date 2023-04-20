@@ -232,3 +232,8 @@ def GLMC_mixed(org1, org2, invs1, invs2, label_org, label_invs, label_org_w, lab
     cutmix_y_w = lam_cutmix * label_org_w + (1 - lam_cutmix) * label_invs_w
 
     return mixup_x, org2, mixup_y, cutmix_y, mixup_y_w, cutmix_y_w
+
+def print_model_param_nums(model=None):
+    total = sum([param.nelement() for param in model.parameters()])
+    print('  + Number of params: %.2fM' % (total / 1e6))
+    return total

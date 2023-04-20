@@ -23,7 +23,7 @@ import math
 from sklearn.metrics import confusion_matrix
 import warnings
 from Trainer import Trainer
-# demo
+
 
 best_acc1 = 0
 
@@ -38,6 +38,8 @@ def get_model(args):
             net = ResNet_cifar.resnet50(num_class=args.num_classes)
         elif args.arch == 'resnet18':
             net = ResNet_cifar.resnet18(num_class=args.num_classes)
+        elif args.arch == 'resnet32':
+            net = ResNet_cifar.resnet32(num_class=args.num_classes)
         elif args.arch == 'resnet34':
             net = ResNet_cifar.resnet34(num_class=args.num_classes)
         return net
@@ -81,10 +83,9 @@ def main():
         torch.cuda.manual_seed_all(args.seed)
         cudnn.deterministic = True
         cudnn.benchmark = True
-    ngpus_per_node = torch.cuda.device_count()
-    main_worker(args.gpu, ngpus_per_node, args)
+    main_worker(args.gpu, args)
 
-def main_worker(gpu, ngpus_per_node, args):
+def main_worker(gpu, args):
 
     global best_acc1
     global train_cls_num_list
@@ -96,7 +97,7 @@ def main_worker(gpu, ngpus_per_node, args):
     # create model
     num_classes = args.num_classes
     model = get_model(args)
-    optimizer = torch.optim.SGD(model.parameters(), momentum=0.9, lr=args.lr, weight_decay=args.weight_decay)
+    _ = print_model_param_nums(model=model)
     if args.gpu is not None:
         torch.cuda.set_device(args.gpu)
         model = model.cuda(args.gpu)
@@ -132,8 +133,8 @@ def main_worker(gpu, ngpus_per_node, args):
 
     cls_num_list = train_dataset.get_per_class_num()
     train_sampler = None
-    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=(train_sampler is None),num_workers=args.workers, pin_memory=True, sampler=train_sampler)
-    val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False,num_workers=args.workers, pin_memory=True)
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=(train_sampler is None),num_workers=args.workers, persistent_workers=True,pin_memory=True, sampler=train_sampler)
+    val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False,num_workers=args.workers, persistent_workers=True,pin_memory=True)
 
     cls_num_list = [0] * num_classes
     for label in train_dataset.targets:
@@ -149,7 +150,7 @@ def main_worker(gpu, ngpus_per_node, args):
     samples_weight = torch.from_numpy(samples_weight)
     samples_weight = samples_weight.double()
     weighted_sampler = torch.utils.data.WeightedRandomSampler(samples_weight, len(samples_weight),replacement=True)
-    weighted_train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size,num_workers=args.workers, pin_memory=True,sampler=weighted_sampler)
+    weighted_train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size,num_workers=args.workers, persistent_workers=True,pin_memory=True,sampler=weighted_sampler)
 
     cls_num_list_cuda = torch.from_numpy(np.array(cls_num_list)).float().cuda()
     start_time = time.time()
@@ -162,7 +163,7 @@ def main_worker(gpu, ngpus_per_node, args):
 if __name__ == '__main__':
     # train set
     parser = argparse.ArgumentParser(description="Global and Local Mixture Consistency Cumulative Learning")
-    parser.add_argument('--dataset', type=str, default='cifar100', help="cifar10,cifar100,ImageNet-LT")
+    parser.add_argument('--dataset', type=str, default='cifar100', help="cifar10,cifar100,ImageNet-LT,iNaturelist2018")
     parser.add_argument('--root', type=str, default='/data/', help="dataset setting")
     parser.add_argument('-a', '--arch', metavar='ARCH', default='resnet34',choices=('resnet18', 'resnet34', 'resnet50', 'resnext50_32x4d'))
     parser.add_argument('--num_classes', default=100, type=int, help='number of classes ')
