@@ -1,7 +1,7 @@
 # [CVPR2023] Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions（GLMC）
 by **Fei Du, Peng Yang, Qi Jia, Fengtao Nan, Xiaoting Chen, Yun Yang**
 
-This is the official implementation of  [Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions](https://github.com/ynu-yangpeng/GLMC/edit/main/README.md)
+This is the official implementation of  [Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions](https://openreview.net/forum?id=gLkKCqK3WOD)
 
 
 
@@ -29,18 +29,37 @@ All codes are written by Python 3.9 with
 - numpy = 1.22.0
 
 ### Preparing Datasets
-Download the datasets CIFAR-10, CIFAR-100, and ImageNet to GLMC/data. The directory should look like
+Download the datasets CIFAR-10, CIFAR-100, ImageNet, and iNaturalist18 to GLMC-2023/data. The directory should look like
 
 ````
-GLMC/data
+GLMC-2023/data
 ├── CIFAR-100-python
 ├── CIFAR-10-batches-py
 ├── ImageNet
 |   └── train
 |   └── val
+├── train_val2018
 └── data_txt
     └── ImageNet_LT_val.txt
     └── ImageNet_LT_train.txt
+    └── iNaturalist18_train.txt
+    └── iNaturalist18_val.txt
+````
+## Training
+for CIFAR-100-LT
+````
+python main.py --dataset cifar100 -a resnet34 --num_classes 100 --imbanlance_rate 0.01 --beta 0.5 --lr 0.01 --epochs 200 -b 128 --momentum 0.9 --weight_decay 5e-3
+--resample_weighting 0.2 --label_weighting 1.0 --contrast_weight 10
+````
+
+for ImageNet-LT
+````
+python main.py --dataset ImageNet-LT -a resnext50_32x4d --num_classes 1000 --beta 0.5 --lr 0.1 --epochs 135 -b 128 --momentum 0.9 --weight_decay 2e-4 --resample_weighting 0.2 --label_weighting 1.0 --contrast_weight 10
+````
+
+## Testing
+````
+python test.py --dataset ImageNet-LT -a resnext50_32x4d --num_classes 1000 --resume model_path
 ````
 
 ## Result and Pretrained models
@@ -75,10 +94,12 @@ GLMC/data
 ## Citation
 If you find this code useful for your research, please consider citing our paper<br>
 ````
-@inproceedings {du2023GLMC,
-    title={Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions},
-    author={Fei Du, Peng Yang, Qi Jia, Fengtao Nan, Xiaoting Chen, Yun Yang},
-    booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-    year={2023}
-  }
+@inproceedings{
+du2023global,
+title={Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions},
+author={Fei Du, Peng Yang, Qi Jia, Fengtao Nan, Xiaoting Chen, Yun Yang},
+booktitle={Conference on Computer Vision and Pattern Recognition 2023},
+year={2023},
+url={https://openreview.net/forum?id=gLkKCqK3WOD}
+}
 ````
