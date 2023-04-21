@@ -44,9 +44,15 @@ GLMC-2023/data
     └── ImageNet_LT_train.txt
     └── iNaturalist18_train.txt
     └── iNaturalist18_val.txt
+    
 ````
 ## Training
 for CIFAR-100-LT
+````
+python main.py --dataset cifar100 -a resnet32 --num_classes 100 --imbanlance_rate 0.01 --beta 0.5 --lr 0.01 --epochs 200 -b 128 --momentum 0.9 --weight_decay 5e-3
+--resample_weighting 0.0 --label_weighting 1.2 --contrast_weight 10
+````
+
 ````
 python main.py --dataset cifar100 -a resnet34 --num_classes 100 --imbanlance_rate 0.01 --beta 0.5 --lr 0.01 --epochs 200 -b 128 --momentum 0.9 --weight_decay 5e-3
 --resample_weighting 0.2 --label_weighting 1.0 --contrast_weight 10
