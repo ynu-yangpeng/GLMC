@@ -87,6 +87,11 @@ for ImageNet-LT
 python main.py --dataset ImageNet-LT -a resnext50_32x4d --num_classes 1000 --beta 0.5 --lr 0.1 --epochs 135 -b 128 --momentum 0.9 --weight_decay 2e-4 --resample_weighting 0.2 --label_weighting 1.0 --contrast_weight 10
 ````
 
+for iNaturelist2018 
+````
+python main.py --dataset iNaturelist2018 -a resnext50_32x4d --num_classes 8142 --beta 0.5 --lr 0.1 --epochs 120 -b 128 --momentum 0.9 --weight_decay 1e-4 --resample_weighting 0.2 --label_weighting 1.0 --contrast_weight 10
+````
+
 ## Testing
 ````
 python test.py --dataset ImageNet-LT -a resnext50_32x4d --num_classes 1000 --resume model_path
@@ -109,6 +114,11 @@ python test.py --dataset ImageNet-LT -a resnext50_32x4d --num_classes 1000 --res
 | :---:| :---:|:---:|:---:|:---:| :---:|  :---:| 
 | GLMC |ResNeXt-50 | 70.1  | 52.4  | 30.4     | 56.3    | [Download](https://drive.google.com/file/d/1om0ZRuC0PYrYHA1mAsdxm31RYQ_sqDUc/view?usp=share_link) |
 | GLMC + BS |ResNeXt-50 | 64.76 | 55.67    | 42.19    | 57.21   | [Download](https://drive.google.com/file/d/1GILBAR5fPcpICtM6uUwmYGkEN11wyEOV/view?usp=share_link) |
+
+### iNaturelist2018     
+| Method | Model | Many | Med | Few | All | model |
+| :---:| :---:|:---:|:---:|:---:| :---:|  :---:| 
+| GLMC |ResNeXt-50 | 64.60  | 73.16  | 73.01     | 72.21    | [Download](https://drive.google.com/file/d/1dcE1eJaRAtMmIF3qTzALnMzTb9AbC3mb/view?usp=share_link) |
 
 
 ## Citation
