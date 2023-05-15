@@ -4,9 +4,8 @@ by **Fei Du, Peng Yang, Qi Jia, Fengtao Nan, Xiaoting Chen, Yun Yang**
 This is the official implementation of  [Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions](https://github.com/ynu-yangpeng/GLMC)
 
 ## Update
-Apologies for the oversight in our paper regarding the incorrect upload of the results for CIFAR-10. We have updated our GitHub repository and reported the final results for CIFAR-10-LT.
-
-Compared to the latest state-of-the-art work by BCL[1], our results are still 3% higher. We have also uploaded the latest paper on arXiv, and you can find it at the following link: [We will upload the arXiv link as soon as possible.](https://github.com/ynu-yangpeng/GLMC)
+> Apologies for the oversight in our paper regarding the incorrect upload of the results for CIFAR-10. We have updated our GitHub repository and reported the final results for CIFAR-10-LT.
+> Compared to the latest state-of-the-art work by BCL[1], our results are still 3% higher. We have also uploaded the latest paper on arXiv, and you can find it at the following link: [We will upload the arXiv link as soon as possible.](https://github.com/ynu-yangpeng/GLMC)
 
 The experimental setup was as follows: 
 
@@ -24,8 +23,10 @@ python main.py --dataset cifar10 -a resnet32 --num_classes 10 --imbanlance_rate 
 | GLMC + MaxNorm   | 50    | ResNet-32     | 90.22%    |
 | GLMC + MaxNorm   | 10    | ResNet-32     | 94.03%    |
 
-
 [1] Jianggang Zhu, ZhengWang, Jingjing Chen, Yi-Ping Phoebe Chen, and Yu-Gang Jiang. Balanced contrastive learning for long-tailed visual recognition. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pages 6908–6917, 2022. 2, 3, 5, 6
+
+> Meanwhile, we have updated the accuracy of GLMC in iNaturelist2018.
+
 
 ## Overview
 
