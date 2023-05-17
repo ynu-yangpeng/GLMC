@@ -105,6 +105,16 @@ python test.py --dataset ImageNet-LT -a resnext50_32x4d --num_classes 1000 --res
 
 ## Result and Pretrained models
 
+### CIFAR-10-LT
+| Method | IF | Model | Top-1 Acc(%) |
+| :---:| :---:|:---:|:---:|
+| GLMC   | 100   | ResNet-32     | 87.75%    |
+| GLMC   | 50    | ResNet-32     | 90.18%    |
+| GLMC   | 10    | ResNet-32     | 94.04%    |
+| GLMC + MaxNorm   | 100   | ResNet-32     | 87.57%    |
+| GLMC + MaxNorm   | 50    | ResNet-32     | 90.22%    |
+| GLMC + MaxNorm   | 10    | ResNet-32     | 94.03%    |
+
 ### CIFAR-100-LT     
 | Method | IF | Model | Top-1 Acc(%) |
 | :---:| :---:|:---:|:---:|    
