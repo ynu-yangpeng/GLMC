@@ -25,7 +25,7 @@ python main.py --dataset cifar10 -a resnet32 --num_classes 10 --imbanlance_rate 
 
 [1] Jianggang Zhu, ZhengWang, Jingjing Chen, Yi-Ping Phoebe Chen, and Yu-Gang Jiang. Balanced contrastive learning for long-tailed visual recognition. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pages 6908–6917, 2022. 2, 3, 5, 6
 
-> Meanwhile, We supplemented the experiment on iNaturelist2018 and achieved the state-of-the-art.
+> 💥Meanwhile, We supplemented the experiment on iNaturelist2018 and achieved the state-of-the-art.
 
 ### iNaturelist2018     
 | Method | Model | Many | Med | Few | All | model |
