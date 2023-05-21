@@ -1,7 +1,9 @@
-# [CVPR2023] Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions（GLMC）
+# 🌎[CVPR2023] Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions（GLMC）
 by **Fei Du, Peng Yang, Qi Jia, Fengtao Nan, Xiaoting Chen, Yun Yang**
 
 This is the official implementation of  [Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions](https://arxiv.org/abs/2305.08661)
+
+🎬[Video](https://www.youtube.com/watch?v=mTeWItl4k9k) | 💻[Slide](https://drive.google.com/file/d/151-tHX2CsuOGmNFHsTxkancZBvf4ZkSB/view?usp=share_link) | 🔥[Poster](https://drive.google.com/file/d/1wEWKrDLBiZAjVf3E7OFvhIi0wg4ME1Tj/view?usp=share_link)
 
 ## Update
 > Apologies for the oversight in our paper regarding the incorrect upload of the results for CIFAR-10. We have updated our GitHub repository and reported the final results for CIFAR-10-LT.
