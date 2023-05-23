@@ -1,8 +1,53 @@
-# [CVPR2023] Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions（GLMC）
+# 🌎[CVPR2023] Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions（GLMC）
 by **Fei Du, Peng Yang, Qi Jia, Fengtao Nan, Xiaoting Chen, Yun Yang**
 
-This is the official implementation of  [Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions](https://openreview.net/forum?id=gLkKCqK3WOD)
+This is the official implementation of  [Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions](https://arxiv.org/abs/2305.08661)
 
+🎬[Video](https://www.youtube.com/watch?v=mTeWItl4k9k) | 💻[Slide](https://drive.google.com/file/d/151-tHX2CsuOGmNFHsTxkancZBvf4ZkSB/view?usp=share_link) | 🔥[Poster](https://drive.google.com/file/d/1wEWKrDLBiZAjVf3E7OFvhIi0wg4ME1Tj/view?usp=share_link)
+
+## Update 2023/5/23
+
+>Thank you very much for the question from @[CxC-ssjg](https://github.com/CxC-ssjg). In our code for the Cifar10Imbalance and Cifar100Imbalance classes, when generating imbalanced data, we used np.random.choice for random sampling of samples. However, we did not set the "replace" parameter in the method to False, which could result in multiple repeated samples of a particular sample, thereby reducing the diversity of the dataset. Based on @[CxC-ssjg](https://github.com/CxC-ssjg)'s advice, we set replace to False and fine-tuned our model accordingly. As a result, we observed a significant improvement in performance compared to the results reported in the paper. We have provided an update on the latest results and made the model publicly available. Once again, thank you, @[CxC-ssjg](https://github.com/CxC-ssjg), for your valuable question.
+
+| Dateset | IF | GLMC | GLMC(Updated + fine-tuned) | GLMC(Updated + fine-tuned) + MaxNorm |
+| :---: |:---:|:---:|:---:|:---:|
+| CIFAR-100-LT | 100   | 55.88%    | [57.99%](https://drive.google.com/file/d/1e5W8GhWeorqo81Ig5lH0S07Obo8t-Eig/view?usp=share_link) | 58.41%    |
+| CIFAR-100-LT | 50    | 61.08%    | [63.85%](https://drive.google.com/file/d/1a3eOrEqSftNcquF8P-Mimb_BYnkUsnbu/view?usp=share_link) | 64.57%    |
+| CIFAR-100-LT | 10    | 70.74%    | [73.47%](https://drive.google.com/file/d/1QSc2Ex0f9NwuC9hY6lkx2T_1cEHvvYu6/view?usp=share_link) | 74.28%    |
+| CIFAR-10-LT | 100   | 87.75%    | [88.49%](https://drive.google.com/file/d/1zn4dAbChgrk8rn51TnngK_E8g7NQO1br/view?usp=share_link) | 89.58%    |
+| CIFAR-10-LT | 50    | 90.18%    | [91.04%](https://drive.google.com/file/d/1jifHJ3INmrt-_JGc9M7YT7GpnSRkRowW/view?usp=share_link) | 92.04%    |
+| CIFAR-10-LT | 10    | 94.04%    | [94.85%](https://drive.google.com/file/d/1grJLvwp1h45YPcoWdCIrE_3Xhp8HVpUN/view?usp=share_link) | 95.00%    |
+
+
+
+
+
+## Update 2023/5/15
+> Apologies for the oversight in our paper regarding the incorrect upload of the results for CIFAR-10. We have updated our GitHub repository and reported the final results for CIFAR-10-LT.
+> Compared to the latest state-of-the-art work by BCL[1], our results are still 3% higher. We have also uploaded the latest paper on arXiv, and you can find it at the following link: [Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions](https://arxiv.org/abs/2305.08661)
+
+The experimental setup was as follows: 
+
+````
+python main.py --dataset cifar10 -a resnet32 --num_classes 10 --imbanlance_rate 0.01 --beta 0.5 --lr 0.01 --epochs 200 -b 64 --momentum 0.9 --weight_decay 5e-3 --resample_weighting 0.0 --label_weighting 1.2 --contrast_weight 4
+````
+
+### CIFAR-10-LT
+| Method | IF | Model | Top-1 Acc(%) |
+| :---:| :---:|:---:|:---:|
+| GLMC   | 100   | ResNet-32     | 87.75%    |
+| GLMC   | 50    | ResNet-32     | 90.18%    |
+| GLMC   | 10    | ResNet-32     | 94.04%    |
+| GLMC + MaxNorm   | 100   | ResNet-32     | 87.57%    |
+| GLMC + MaxNorm   | 50    | ResNet-32     | 90.22%    |
+| GLMC + MaxNorm   | 10    | ResNet-32     | 94.03%    |
+
+[1] Jianggang Zhu, ZhengWang, Jingjing Chen, Yi-Ping Phoebe Chen, and Yu-Gang Jiang. Balanced contrastive learning for long-tailed visual recognition. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pages 6908–6917, 2022. 2, 3, 5, 6
+
+### 💥Meanwhile, We supplemented the experiment on iNaturelist2018 and achieved the state-of-the-art.
+| Method | Model | Many | Med | Few | All | model |
+| :---:| :---:|:---:|:---:|:---:| :---:|  :---:| 
+| GLMC |ResNeXt-50 | 64.60  | 73.16  | 73.01     | 72.21    | [Download](https://drive.google.com/file/d/1dcE1eJaRAtMmIF3qTzALnMzTb9AbC3mb/view?usp=share_link) |
 
 
 ## Overview
@@ -44,17 +89,30 @@ GLMC-2023/data
     └── ImageNet_LT_train.txt
     └── iNaturalist18_train.txt
     └── iNaturalist18_val.txt
+    
 ````
 ## Training
+
+for CIFAR-10-LT
+````
+python main.py --dataset cifar10 -a resnet32 --num_classes 10 --imbanlance_rate 0.01 --beta 0.5 --lr 0.01 --epochs 200 -b 64 --momentum 0.9 --weight_decay 5e-3 --resample_weighting 0.0 --label_weighting 1.2 --contrast_weight 4
+````
+
 for CIFAR-100-LT
 ````
-python main.py --dataset cifar100 -a resnet34 --num_classes 100 --imbanlance_rate 0.01 --beta 0.5 --lr 0.01 --epochs 200 -b 128 --momentum 0.9 --weight_decay 5e-3
---resample_weighting 0.2 --label_weighting 1.0 --contrast_weight 10
+python main.py --dataset cifar100 -a resnet32 --num_classes 100 --imbanlance_rate 0.01 --beta 0.5 --lr 0.01 --epochs 200 -b 64 --momentum 0.9 --weight_decay 5e-3
+--resample_weighting 0.0 --label_weighting 1.2 --contrast_weight 10
 ````
+
 
 for ImageNet-LT
 ````
-python main.py --dataset ImageNet-LT -a resnext50_32x4d --num_classes 1000 --beta 0.5 --lr 0.1 --epochs 135 -b 128 --momentum 0.9 --weight_decay 2e-4 --resample_weighting 0.2 --label_weighting 1.0 --contrast_weight 10
+python main.py --dataset ImageNet-LT -a resnext50_32x4d --num_classes 1000 --beta 0.5 --lr 0.1 --epochs 135 -b 120 --momentum 0.9 --weight_decay 2e-4 --resample_weighting 0.2 --label_weighting 1.0 --contrast_weight 10
+````
+
+for iNaturelist2018 
+````
+python main.py --dataset iNaturelist2018 -a resnext50_32x4d --num_classes 8142 --beta 0.5 --lr 0.1 --epochs 120 -b 128 --momentum 0.9 --weight_decay 1e-4 --resample_weighting 0.2 --label_weighting 1.0 --contrast_weight 10
 ````
 
 ## Testing
@@ -67,12 +125,12 @@ python test.py --dataset ImageNet-LT -a resnext50_32x4d --num_classes 1000 --res
 ### CIFAR-10-LT
 | Method | IF | Model | Top-1 Acc(%) |
 | :---:| :---:|:---:|:---:|
-| GLMC   | 100   | ResNet-32     | 92.34    |
-| GLMC   | 50    | ResNet-32     | 94.18    |
-| GLMC   | 10    | ResNet-32     | 94.92    |
-| GLMC +  MaxNorm  | 100   | ResNet-32     | 94.18    |
-| GLMC +  MaxNorm  | 50    | ResNet-32     | 95.13    |
-| GLMC +  MaxNorm  | 10    | ResNet-32     | 95.70    |
+| GLMC   | 100   | ResNet-32     | 87.75%    |
+| GLMC   | 50    | ResNet-32     | 90.18%    |
+| GLMC   | 10    | ResNet-32     | 94.04%    |
+| GLMC + MaxNorm   | 100   | ResNet-32     | 87.57%    |
+| GLMC + MaxNorm   | 50    | ResNet-32     | 90.22%    |
+| GLMC + MaxNorm   | 10    | ResNet-32     | 94.03%    |
 
 ### CIFAR-100-LT     
 | Method | IF | Model | Top-1 Acc(%) |
@@ -89,6 +147,11 @@ python test.py --dataset ImageNet-LT -a resnext50_32x4d --num_classes 1000 --res
 | :---:| :---:|:---:|:---:|:---:| :---:|  :---:| 
 | GLMC |ResNeXt-50 | 70.1  | 52.4  | 30.4     | 56.3    | [Download](https://drive.google.com/file/d/1om0ZRuC0PYrYHA1mAsdxm31RYQ_sqDUc/view?usp=share_link) |
 | GLMC + BS |ResNeXt-50 | 64.76 | 55.67    | 42.19    | 57.21   | [Download](https://drive.google.com/file/d/1GILBAR5fPcpICtM6uUwmYGkEN11wyEOV/view?usp=share_link) |
+
+### iNaturelist2018     
+| Method | Model | Many | Med | Few | All | model |
+| :---:| :---:|:---:|:---:|:---:| :---:|  :---:| 
+| GLMC |ResNeXt-50 | 64.60  | 73.16  | 73.01     | 72.21    | [Download](https://drive.google.com/file/d/1dcE1eJaRAtMmIF3qTzALnMzTb9AbC3mb/view?usp=share_link) |
 
 
 ## Citation
