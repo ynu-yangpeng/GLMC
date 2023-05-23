@@ -9,7 +9,7 @@ This is the official implementation of  [Global and Local Mixture Consistency Cu
 
 >Thank you very much for the question from @[CxC-ssjg](https://github.com/CxC-ssjg). In our code for the Cifar10Imbalance and Cifar100Imbalance classes, when generating imbalanced data, we used np.random.choice for random sampling of samples. However, we did not set the "replace" parameter in the method to False, which could result in multiple repeated samples of a particular sample, thereby reducing the diversity of the dataset. Based on @[CxC-ssjg](https://github.com/CxC-ssjg)'s advice, we set replace to False and fine-tuned our model accordingly. As a result, we observed a significant improvement in performance compared to the results reported in the paper. We have provided an update on the latest results and made the model publicly available. Once again, thank you, @[CxC-ssjg](https://github.com/CxC-ssjg), for your valuable question.
 
-| Dateset | IF | GLMC | GLMC(Updated + fine-tuned) | GLMC(Updated + fine-tuned) + MaxNorm |
+| Dateset | IF | GLMC | GLMC(Updated) | GLMC(Updated) + MaxNorm |
 | :---: |:---:|:---:|:---:|:---:|
 | CIFAR-100-LT | 100   | 55.88%    | [57.99%](https://drive.google.com/file/d/1QNusy82tFNCK_Urz7cdztpHRV-9gQoW3/view?usp=share_link) | 58.41%    |
 | CIFAR-100-LT | 50    | 61.08%    | [63.85%](https://drive.google.com/file/d/1QEoDpwIDnK57vK-DPU6wjIYTxoG3dj98/view?usp=share_link) | 64.57%    |
