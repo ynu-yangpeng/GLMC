@@ -5,7 +5,24 @@ This is the official implementation of  [Global and Local Mixture Consistency Cu
 
 🎬[Video](https://www.youtube.com/watch?v=mTeWItl4k9k) | 💻[Slide](https://drive.google.com/file/d/151-tHX2CsuOGmNFHsTxkancZBvf4ZkSB/view?usp=share_link) | 🔥[Poster](https://drive.google.com/file/d/1wEWKrDLBiZAjVf3E7OFvhIi0wg4ME1Tj/view?usp=share_link)
 
-## Update
+## Update 2023/5/23
+
+>Thank you very much for the question from @[CxC-ssjg](https://github.com/CxC-ssjg). In our code for the Cifar10Imbalance and Cifar100Imbalance classes, when generating imbalanced data, we used np.random.choice for random sampling of samples. However, we did not set the "replace" parameter in the method to False, which could result in multiple repeated samples of a particular sample, thereby reducing the diversity of the dataset. Based on @[CxC-ssjg](https://github.com/CxC-ssjg)'s advice, we set replace to False and fine-tuned our model accordingly. As a result, we observed a significant improvement in performance compared to the results reported in the paper. We have provided an update on the latest results and made the model publicly available. Once again, thank you, @[CxC-ssjg](https://github.com/CxC-ssjg), for your valuable question.
+
+| Dateset | IF | GLMC | GLMC(Updated + fine-tuned) | GLMC(Updated + fine-tuned) + MaxNorm |
+| :---: |:---:|:---:|:---:|:---:|
+| CIFAR-100-LT | 100   | 55.88%    | [57.99%](https://drive.google.com/file/d/1e5W8GhWeorqo81Ig5lH0S07Obo8t-Eig/view?usp=share_link) | 58.41%    |
+| CIFAR-100-LT | 50    | 61.08%    | [63.85%](https://drive.google.com/file/d/1a3eOrEqSftNcquF8P-Mimb_BYnkUsnbu/view?usp=share_link) | 64.57%    |
+| CIFAR-100-LT | 10    | 70.74%    | [73.47%](https://drive.google.com/file/d/1QSc2Ex0f9NwuC9hY6lkx2T_1cEHvvYu6/view?usp=share_link) | 74.28%    |
+| CIFAR-10-LT | 100   | 87.75%    | [88.49%](https://drive.google.com/file/d/1zn4dAbChgrk8rn51TnngK_E8g7NQO1br/view?usp=share_link) | 89.58%    |
+| CIFAR-10-LT | 50    | 90.18%    | [91.04%](https://drive.google.com/file/d/1jifHJ3INmrt-_JGc9M7YT7GpnSRkRowW/view?usp=share_link) | 92.04%    |
+| CIFAR-10-LT | 10    | 94.04%    | [94.85%](https://drive.google.com/file/d/1grJLvwp1h45YPcoWdCIrE_3Xhp8HVpUN/view?usp=share_link) | 95.00%    |
+
+
+
+
+
+## Update 2023/5/15
 > Apologies for the oversight in our paper regarding the incorrect upload of the results for CIFAR-10. We have updated our GitHub repository and reported the final results for CIFAR-10-LT.
 > Compared to the latest state-of-the-art work by BCL[1], our results are still 3% higher. We have also uploaded the latest paper on arXiv, and you can find it at the following link: [Global and Local Mixture Consistency Cumulative Learning for Long-tailed Visual Recognitions](https://arxiv.org/abs/2305.08661)
 
