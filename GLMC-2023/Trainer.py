@@ -209,7 +209,7 @@ class Trainer(object):
             cls_cnt = cf.sum(axis=1)
             cls_hit = np.diag(cf)
             cls_acc = cls_hit / cls_cnt
-            output = ('EPOCH: {epoch} {flag} Results: Prec@1 {top1.avg:.3f} Prec@5 {top5.avg:.3f}'.format(epoch=epoch, flag='val', top1=top1, top5=top5))
+            output = ('EPOCH: {epoch} {flag} Results: Prec@1 {top1.avg:.3f} Prec@5 {top5.avg:.3f}'.format(epoch=epoch + 1 , flag='val', top1=top1, top5=top5))
 
             self.log.info(output)
             out_cls_acc = '%s Class Accuracy: %s' % (

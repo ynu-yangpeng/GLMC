@@ -70,7 +70,7 @@ class Cifar10Imbanlance(Dataset):
             task_train_x = x_train[index]
             label = y_train[index]
             data_num = task_train_x.shape[0]
-            index = np.random.choice(data_num, data_percent[i - 1])
+            index = np.random.choice(data_num, data_percent[i - 1],replace=False)
             tem_data = task_train_x[index]
             tem_label = label[index]
             if rehearsal_data is None:
