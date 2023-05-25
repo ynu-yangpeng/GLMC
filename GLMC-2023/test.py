@@ -17,26 +17,21 @@ from model import ResNet_cifar
 from model import Resnet_LT
 from imbalance_data import cifar10Imbanlance,cifar100Imbanlance,dataset_lt_data
 
-def eval_training(model,val_loader,args):
-        model.eval()
-        correct_top1 = []
-        predList = np.array([])
-        grndList = np.array([])
-        for i,  (inputs, labels) in enumerate(val_loader):
-            inputs, labels = inputs.cuda(), labels.cuda()
-            with torch.no_grad():
-                logits = model(inputs,train=False)
-                softmaxScores = F.softmax(logits, dim=1)
-                predLabels = softmaxScores.argmax(dim=1).detach().squeeze()
-                predList = np.concatenate((predList, predLabels.cpu().numpy()))
-                grndList = np.concatenate((grndList, labels.cpu().numpy()))
-                top1, top5 = accuracy(logits.data, labels.data, topk=(1,5))
-                correct_top1.append(top1.cpu().numpy())
-            output = 'Test:  ' + str(i) +' Prec@1:  ' + str(top1.item())
-            print(output)
 
-        correct_top1 = sum(correct_top1) / len(correct_top1)
-        return correct_top1
+def eval_training(model, val_loader, args):
+    size = len(val_loader)
+    model.eval()
+    correct_top1 = []
+    for i, (inputs, labels) in enumerate(val_loader):
+        inputs, labels = inputs.cuda(), labels.cuda()
+        with torch.no_grad():
+            logits = model(inputs, train=False)
+            top1, _ = accuracy(logits.data, labels.data, topk=(1, 5))
+            correct_top1.append(top1.cpu().numpy())
+        output = 'Test:  ' + str(i) + ' Prec@1:  ' + str(top1.item())
+        print(output)
+    correct_top1 = sum(correct_top1) / len(correct_top1)
+    return correct_top1
 
 def get_model(args):
     if args.dataset == "ImageNet-LT" or args.dataset == "iNaturelist2018":
