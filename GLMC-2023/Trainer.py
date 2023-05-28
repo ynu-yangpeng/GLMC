@@ -159,7 +159,7 @@ class Trainer(object):
         batch_time = AverageMeter('Time', ':6.3f')
         top1 = AverageMeter('Acc@1', ':6.2f')
         top5 = AverageMeter('Acc@5', ':6.2f')
-        eps = 2.220446049250313e-16
+        eps = np.finfo(np.float64).eps
 
         # switch to evaluate mode
         self.model.eval()
@@ -183,12 +183,6 @@ class Trainer(object):
                 acc1, acc5 = accuracy(output, target, topk=(1, 5))
                 top1.update(acc1.item(), input.size(0))
                 top5.update(acc5.item(), input.size(0))
-
-                prob = torch.softmax(output, dim=1)
-                confidence_part, pred_class_part = torch.max(prob, dim=1)
-                confidence = np.append(confidence, confidence_part.cpu().numpy())
-                pred_class = np.append(pred_class, pred_class_part.cpu().numpy())
-                true_class = np.append(true_class, target.cpu().numpy())
 
                 # measure elapsed time
                 batch_time.update(time.time() - end)

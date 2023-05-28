@@ -100,7 +100,6 @@ def get_transform(dataset):
         transform_train = transforms.Compose([
             transforms.RandomCrop(32, padding=4),
             transforms.RandomHorizontalFlip(),
-            # transforms.RandomRotation(5),
             transforms.ToTensor(),
             transforms.Normalize(mean=mean, std=std),
         ])
@@ -111,22 +110,10 @@ def get_transform(dataset):
         ])
         return transform_train, transform_val
 
-    r = random.random()
     if dataset == "ImageNet-LT":
         normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         rgb_mean = (0.485, 0.456, 0.406)
         ra_params = dict(translate_const=int(224 * 0.45),img_mean=tuple([min(255, round(255 * x)) for x in rgb_mean]), )
-
-        augmentation_randncls = [
-            transforms.RandomResizedCrop(224, scale=(0.08, 1.)),
-            transforms.RandomHorizontalFlip(),
-            transforms.RandomApply([
-                transforms.ColorJitter(0.4, 0.4, 0.4, 0.0)
-            ], p=1.0),
-            rand_augment_transform('rand-n{}-m{}-mstd0.5'.format(2, 10), ra_params),
-            transforms.ToTensor(),
-            normalize,
-        ]
         augmentation_sim = [
             transforms.RandomResizedCrop(224),
             transforms.RandomApply([
@@ -144,29 +131,15 @@ def get_transform(dataset):
             transforms.ToTensor(),
             normalize])
 
-        if r < 0.5:
-            transform_train = transforms.Compose(augmentation_randncls)
-        else:
-            transform_train = transforms.Compose(augmentation_sim)
+        transform_train = transforms.Compose(augmentation_sim)
 
         return transform_train, transform_val
 
     if dataset == "iNaturelist2018":
         normalize = transforms.Normalize(mean=[0.466, 0.471, 0.380], std=[0.195, 0.194, 0.192])
         rgb_mean = (0.485, 0.456, 0.406)
-        ra_params = dict(translate_const=int(224 * 0.45),
-                         img_mean=tuple([min(255, round(255 * x)) for x in rgb_mean]), )
+        ra_params = dict(translate_const=int(224 * 0.45), img_mean=tuple([min(255, round(255 * x)) for x in rgb_mean]), )
 
-        augmentation_randncls = [
-            transforms.RandomResizedCrop(224, scale=(0.08, 1.)),
-            transforms.RandomHorizontalFlip(),
-            transforms.RandomApply([
-                transforms.ColorJitter(0.4, 0.4, 0.4, 0.0)
-            ], p=1.0),
-            rand_augment_transform('rand-n{}-m{}-mstd0.5'.format(2, 10), ra_params),
-            transforms.ToTensor(),
-            normalize,
-        ]
         augmentation_sim = [
             transforms.RandomResizedCrop(224),
             transforms.RandomApply([
@@ -184,10 +157,7 @@ def get_transform(dataset):
             transforms.ToTensor(),
             normalize])
 
-        if r < 0.5:
-            transform_train = transforms.Compose(augmentation_randncls)
-        else:
-            transform_train = transforms.Compose(augmentation_sim)
+        transform_train = transforms.Compose(augmentation_sim)
 
         return transform_train, transform_val
 

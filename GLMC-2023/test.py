@@ -1,16 +1,6 @@
-import sys
 import os
 import argparse
-sys.path.append(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0])
-os.path.dirname
-os.path.abspath(os.path.dirname(__file__))
-sys.path.append(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0])
 import torch
-import torch.nn as nn
-import numpy as np
-import random
-from torch.backends import cudnn
-import torch.nn.functional as F
 from utils import util
 from utils.util import *
 from model import ResNet_cifar
@@ -18,20 +8,25 @@ from model import Resnet_LT
 from imbalance_data import cifar10Imbanlance,cifar100Imbanlance,dataset_lt_data
 
 
-def eval_training(model, val_loader, args):
-    size = len(val_loader)
+def validate(model,val_loader,args):
+    top1 = AverageMeter('Acc@1', ':6.2f')
+    top5 = AverageMeter('Acc@5', ':6.2f')
+    # switch to evaluate mode
     model.eval()
-    correct_top1 = []
-    for i, (inputs, labels) in enumerate(val_loader):
-        inputs, labels = inputs.cuda(), labels.cuda()
-        with torch.no_grad():
-            logits = model(inputs, train=False)
-            top1, _ = accuracy(logits.data, labels.data, topk=(1, 5))
-            correct_top1.append(top1.cpu().numpy())
-        output = 'Test:  ' + str(i) + ' Prec@1:  ' + str(top1.item())
+    with torch.no_grad():
+        for i, (input, target) in enumerate(val_loader):
+            input = input.cuda()
+            target = target.cuda()
+            # compute output
+            output = model(input, train=False)
+            # measure accuracy
+            acc1, acc5 = accuracy(output, target, topk=(1, 5))
+            top1.update(acc1.item(), input.size(0))
+            top5.update(acc5.item(), input.size(0))
+            output = 'Testing:  ' + str(i) + ' Prec@1:  ' + str(top1.val) + ' Prec@5:  ' + str(top5.val)
+            print(output, end="\r")
+        output = ('{flag} Results: Prec@1 {top1.avg:.3f} Prec@5 {top5.avg:.3f}'.format(flag='val', top1=top1, top5=top5))
         print(output)
-    correct_top1 = sum(correct_top1) / len(correct_top1)
-    return correct_top1
 
 def get_model(args):
     if args.dataset == "ImageNet-LT" or args.dataset == "iNaturelist2018":
@@ -42,6 +37,8 @@ def get_model(args):
             net = ResNet_cifar.resnet50(num_class=args.num_classes)
         elif args.arch == 'resnet18':
             net = ResNet_cifar.resnet18(num_class=args.num_classes)
+        elif args.arch == 'resnet32':
+            net = ResNet_cifar.resnet32(num_class=args.num_classes)
         elif args.arch == 'resnet34':
             net = ResNet_cifar.resnet34(num_class=args.num_classes)
         print("=> creating model '{}'".format(args.arch))
@@ -61,21 +58,20 @@ def get_dataset(args):
 
     if args.dataset == 'ImageNet-LT':
         testset = dataset_lt_data.LT_Dataset(args.root, args.dir_test_txt, transform_val)
+        print("load ImageNet-LT")
         return testset
 
     if args.dataset == 'iNaturelist2018':
         testset = dataset_lt_data.LT_Dataset(args.root, args.dir_test_txt,transform_val)
+        print("load iNaturelist2018")
         return testset
 
 def main():
     args = parser.parse_args()
-    global train_cls_num_list
-    global cls_num_list_cuda
 
     if args.gpu is not None:
         print("Use GPU: {} for testing".format(args.gpu))
     # create model
-    num_classes = args.num_classes
     model = get_model(args)
 
     if args.gpu is not None:
@@ -97,32 +93,26 @@ def main():
     val_dataset = get_dataset(args)
     val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False,num_workers=args.workers, pin_memory=True)
 
-    cls_num_list = [0] * num_classes
-    for label in val_dataset.targets:
-        cls_num_list[label] += 1
-    train_cls_num_list = np.array(cls_num_list)
-    cls_num_list_cuda = torch.from_numpy(np.array(cls_num_list)).float().cuda()
 
     print("Testing started!")
     # switch to evaluate mode
     model.eval()
-    acc = eval_training(model, val_loader, args)
-    print("All acc : "+str(acc))
+    validate(model, val_loader, args)
 
 if __name__ == '__main__':
     # test set
     parser = argparse.ArgumentParser(description="Global and Local Mixture Consistency Cumulative Learning")
     parser.add_argument('--dataset', type=str, default='cifar100',help="cifar10,cifar100,ImageNet-LT,iNaturelist2018")
     parser.add_argument('--root', type=str, default='/data/',help="dataset setting")
-    parser.add_argument('-a', '--arch', metavar='ARCH', default='resnet34',choices=('resnet18', 'resnet34', 'resnet50', 'resnext50_32x4d'))
+    parser.add_argument('-a', '--arch', metavar='ARCH', default='resnet32',choices=('resnet18', 'resnet32', 'resnet50', 'resnext50_32x4d'))
     parser.add_argument('--imbanlance_rate', default=0.01, type=float, help='imbalance factor')
     parser.add_argument('--num_classes', default=100, type=int, help='number of classes ',choices=('10', '100', '1000', '8142'))
-    parser.add_argument('-b', '--batch_size', default=128, type=int,metavar='N', help='mini-batch size')
+    parser.add_argument('-b', '--batch_size', default=100, type=int,metavar='N', help='mini-batch size')
     # etc.
     parser.add_argument('-p', '--print_freq', default=100, type=int, metavar='N',help='print frequency (default: 100)')
     parser.add_argument('--gpu', default=None, type=int,help='GPU id to use.')
     parser.add_argument('-j', '--workers', default=4, type=int, metavar='N',help='number of data loading workers (default: 4)')
-    parser.add_argument('--resume', default='model path', type=str, metavar='PATH',help='path to latest checkpoint (default: none)')
+    parser.add_argument('--resume', default='model path', type=str, metavar='PATH',help='path to latest checkpoint')
     parser.add_argument('--root_model', type=str, default='GLMC-CVPR2023/output/')
     parser.add_argument('--store_name', type=str, default='GLMC-CVPR2023/output/')
     parser.add_argument('--dir_train_txt', type=str,default="GLMC-CVPR2023/data/data_txt/iNaturalist18_train.txt")

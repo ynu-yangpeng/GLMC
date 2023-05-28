@@ -2,10 +2,6 @@ import sys
 import os
 import time
 import argparse
-sys.path.append(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0])
-os.path.dirname
-os.path.abspath(os.path.dirname(__file__))
-sys.path.append(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0])
 import torch
 import torch.nn as nn
 import numpy as np
@@ -21,11 +17,7 @@ import logging
 import datetime
 import math
 from sklearn.metrics import confusion_matrix
-import warnings
 from Trainer import Trainer
-
-
-
 
 best_acc1 = 0
 
