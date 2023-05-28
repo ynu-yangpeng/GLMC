@@ -11,12 +11,12 @@ This is the official implementation of  [Global and Local Mixture Consistency Cu
 
 | Dateset | IF | GLMC | GLMC(Updated) | GLMC(Updated) + MaxNorm |
 | :---: |:---:|:---:|:---:|:---:|
-| CIFAR-100-LT | 100   | 55.88%    | [57.99%](https://drive.google.com/file/d/1QNusy82tFNCK_Urz7cdztpHRV-9gQoW3/view?usp=share_link) | 58.41%    |
-| CIFAR-100-LT | 50    | 61.08%    | [63.86%](https://drive.google.com/file/d/1QEoDpwIDnK57vK-DPU6wjIYTxoG3dj98/view?usp=share_link) | 64.57%    |
-| CIFAR-100-LT | 10    | 70.74%    | [73.46%](https://drive.google.com/file/d/1ZOqNwi83dW4Rj3lsEE_xuVFQMYAKrhjc/view?usp=share_link) | 74.28%    |
-| CIFAR-10-LT | 100   | 87.75%    | [88.46%](https://drive.google.com/file/d/1doBLTL9-Y1Sv_2BZ-OFcFlt3rL0JxqZ0/view?usp=share_link) | 89.58%    |
-| CIFAR-10-LT | 50    | 90.18%    | [91.02%](https://drive.google.com/file/d/1n7ieuDZSMODeAs20kutBbEncn3RUavqe/view?usp=share_link) | 92.04%    |
-| CIFAR-10-LT | 10    | 94.04%    | [94.83%](https://drive.google.com/file/d/1YYxqUR90J1ab0UKs4S2Qb09yi_9jFOjD/view?usp=share_link) | 95.00%    |
+| CIFAR-100-LT | 100   | 55.88%    | [57.97%](https://drive.google.com/file/d/1QNusy82tFNCK_Urz7cdztpHRV-9gQoW3/view?usp=share_link) | 58.41%    |
+| CIFAR-100-LT | 50    | 61.08%    | [63.78%](https://drive.google.com/file/d/1QEoDpwIDnK57vK-DPU6wjIYTxoG3dj98/view?usp=share_link) | 64.57%    |
+| CIFAR-100-LT | 10    | 70.74%    | [73.40%](https://drive.google.com/file/d/1ZOqNwi83dW4Rj3lsEE_xuVFQMYAKrhjc/view?usp=share_link) | 74.28%    |
+| CIFAR-10-LT | 100   | 87.75%    | [88.50%](https://drive.google.com/file/d/1doBLTL9-Y1Sv_2BZ-OFcFlt3rL0JxqZ0/view?usp=share_link) | 89.58%    |
+| CIFAR-10-LT | 50    | 90.18%    | [91.04%](https://drive.google.com/file/d/1n7ieuDZSMODeAs20kutBbEncn3RUavqe/view?usp=share_link) | 92.04%    |
+| CIFAR-10-LT | 10    | 94.04%    | [94.87%](https://drive.google.com/file/d/1YYxqUR90J1ab0UKs4S2Qb09yi_9jFOjD/view?usp=share_link) | 95.00%    |
 
 
 
