@@ -21,6 +21,7 @@ def validate(model,val_loader,args):
             output = model(input, train=False)
             # measure accuracy
             acc1, acc5 = accuracy(output, target, topk=(1, 5))
+
             top1.update(acc1.item(), input.size(0))
             top5.update(acc5.item(), input.size(0))
             output = 'Testing:  ' + str(i) + ' Prec@1:  ' + str(top1.val) + ' Prec@5:  ' + str(top5.val)
