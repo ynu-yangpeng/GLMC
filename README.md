@@ -170,6 +170,6 @@ title={Global and Local Mixture Consistency Cumulative Learning for Long-tailed 
 author={Fei Du, Peng Yang, Qi Jia, Fengtao Nan, Xiaoting Chen, Yun Yang},
 booktitle={Conference on Computer Vision and Pattern Recognition 2023},
 year={2023},
-url={https://openreview.net/forum?id=gLkKCqK3WOD}
+url={https://arxiv.org/abs/2305.08661}
 }
 ````
